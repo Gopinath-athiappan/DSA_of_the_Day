@@ -1,0 +1,70 @@
+// Merge Two Sorted Lists
+
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
+    if(list1==NULL || (list1==NULL&&list2==NULL)) return list2;
+    if(list2==NULL) return list1;
+    struct ListNode*temp;
+    struct ListNode*prev=NULL;
+    if(list1->val >=list2->val)
+    {
+        temp=list2;
+        list2=list2->next;
+        temp->next=list1;
+        list1=temp;
+    }
+    else if((list2->next==NULL && list1->next==NULL) && list1->val < list2->val)
+    {
+       temp=list2;
+       list2=list2->next;
+       temp->next=list1->next;
+       list1->next=temp;
+    }
+    if(list2==NULL) return list1;
+    struct ListNode*tptr;
+    for(tptr=list1;tptr->next!=NULL;prev=tptr,tptr=tptr->next)
+    {
+        
+        if(tptr->val == list2->val)
+        {
+            temp=list2;
+            list2=list2->next;
+            temp->next=tptr->next;
+            tptr->next=temp;
+            //list2->next=temp;
+        }
+        if(list2==NULL) break;  
+        if(tptr->val > list2->val)
+        {
+            temp=list2;
+            prev->next=temp;
+            list2=list2->next;
+            temp->next=tptr;
+            tptr=prev;
+        }
+        if(list2==NULL) break;    
+    }
+    while((list2!=NULL && tptr!=NULL))
+    {
+     if((tptr->val >= list2->val))
+     {
+        temp=list2;
+        prev->next=temp;
+        list2=list2->next;
+        temp->next=tptr;
+        tptr=prev;
+        prev=tptr;
+        tptr=tptr->next;
+     }
+     else {
+     prev=tptr;
+     tptr=tptr->next; }
+    }
+    if(tptr==NULL)
+    {
+        prev->next=list2;
+    }
+    
+
+    return list1;
+}
