@@ -1,0 +1,21 @@
+// Linked List Cycle
+// Leetcode 141.
+
+
+bool hasCycle(struct ListNode *head) {
+    struct ListNode *slowptr=head;
+    struct ListNode *fastptr=head;
+    while (fastptr!=NULL)
+    {
+        fastptr=fastptr->next;
+        if(fastptr==NULL)
+        return false;
+        else{
+        fastptr=fastptr->next;
+        slowptr=slowptr->next;
+        }
+        if(fastptr==slowptr)
+        return true;
+    }
+    return false;
+}
